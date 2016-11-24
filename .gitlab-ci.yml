@@ -1,10 +1,33 @@
-image: php:7.0
 
 stages:
  - test
  
-run_tests:
+tests:7.0:
   stage: test
+  image: php:7.0
+  before_script:
+    ## INSTALL DEPENDENCIES
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -yqq
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" -yqq install git zlib1g-dev
+    ## INSTALL PHP EXTENSIONS
+    - docker-php-ext-install -j$(nproc) zip 
+    ## INSTALL & RUN COMPOSER
+    - test ! -f composer.phar && curl -o composer.phar https://getcomposer.org/composer.phar
+    - chmod +x composer.phar
+    - php composer.phar self-update
+    - php composer.phar install
+  script:
+    - make all
+  cache:
+    paths:
+    - vendor/
+    - composer.phar
+    - apt-cache/
+
+tests:5.6:
+  stage: test
+  image: php:5.6
   before_script:
     ## INSTALL DEPENDENCIES
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
