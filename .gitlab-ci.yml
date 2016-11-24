@@ -1,0 +1,19 @@
+image: php:7.0
+
+stages:
+ - test
+ 
+run_tests:
+  stage: test
+  before_script:
+    ## INSTALL DEPENDENCIES
+    - test ! -f composer.phar && curl -o composer.phar https://getcomposer.org/composer.phar
+    - chmod +x composer.phar
+    - php composer.phar self-update
+    - php composer.phar install
+  script:
+    - make all
+  cache:
+    paths:
+    - vendor/
+    - composer.phar
