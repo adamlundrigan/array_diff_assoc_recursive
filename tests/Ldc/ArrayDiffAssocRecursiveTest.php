@@ -5,13 +5,13 @@ class ArrayDiffAssocRecursiveTest extends \PHPUnit_Framework_TestCase
 {
     public function testRequiresArraysAsFirstArgument()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->setExpectedException(class_exists('TypeError') ? 'TypeError' : 'PHPUnit_Framework_Error');
         \Ldc\array_diff_assoc_recursive('foo', []);
     }
 
     public function testRequiresArraysAsSecondArgument()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->setExpectedException(class_exists('TypeError') ? 'TypeError' : 'PHPUnit_Framework_Error');
         \Ldc\array_diff_assoc_recursive([], 'foo');
     }
 
