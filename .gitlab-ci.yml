@@ -7,7 +7,10 @@ run_tests:
   stage: test
   before_script:
     ## INSTALL DEPENDENCIES
-    - apt-get install -y git
+    - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
+    - apt-get update -yqq
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" -yqq install git
+    ## INSTALL & RUN COMPOSER
     - test ! -f composer.phar && curl -o composer.phar https://getcomposer.org/composer.phar
     - chmod +x composer.phar
     - php composer.phar self-update
@@ -18,3 +21,4 @@ run_tests:
     paths:
     - vendor/
     - composer.phar
+    - apt-cache/
