@@ -7,6 +7,7 @@ run_tests:
   stage: test
   before_script:
     ## INSTALL DEPENDENCIES
+    - apt-get install -y git
     - test ! -f composer.phar && curl -o composer.phar https://getcomposer.org/composer.phar
     - chmod +x composer.phar
     - php composer.phar self-update
