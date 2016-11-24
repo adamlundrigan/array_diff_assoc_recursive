@@ -9,7 +9,7 @@ run_tests:
     ## INSTALL DEPENDENCIES
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -yqq
-    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" -yqq install git
+    - apt-get -o dir::cache::archives="$APT_CACHE_DIR" -yqq install git zlib1g-dev
     ## INSTALL PHP EXTENSIONS
     - docker-php-ext-install -j$(nproc) zip 
     ## INSTALL & RUN COMPOSER
