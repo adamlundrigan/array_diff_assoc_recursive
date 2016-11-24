@@ -10,6 +10,8 @@ run_tests:
     - export APT_CACHE_DIR=`pwd`/apt-cache && mkdir -pv $APT_CACHE_DIR
     - apt-get update -yqq
     - apt-get -o dir::cache::archives="$APT_CACHE_DIR" -yqq install git
+    ## INSTALL PHP EXTENSIONS
+    - docker-php-ext-install -j$(nproc) zip 
     ## INSTALL & RUN COMPOSER
     - test ! -f composer.phar && curl -o composer.phar https://getcomposer.org/composer.phar
     - chmod +x composer.phar
